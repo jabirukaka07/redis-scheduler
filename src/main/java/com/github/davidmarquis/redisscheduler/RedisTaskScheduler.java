@@ -1,6 +1,7 @@
 package com.github.davidmarquis.redisscheduler;
 
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Schedules arbitrary tasks in the future.
@@ -20,6 +21,8 @@ public interface RedisTaskScheduler {
      *                then the task will be immediately scheduled for execution.
      */
     void schedule(String taskId, Calendar trigger);
+    
+    public void scheduleAt(String taskId, int period, TimeUnit unit);
 
     /**
      * Removes all currently scheduled tasks from the scheduler.
@@ -32,4 +35,11 @@ public interface RedisTaskScheduler {
      * @param taskId The task ID to remove.
      */
     void unschedule(String taskId);
+    
+    /**
+     * Gets due time that the task trigger at.
+     * @param taskId The task ID.
+     * @return The due time that the task trigger at.
+     */
+    Long getScheduleDueTime(String taskId);
 }
